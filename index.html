@@ -8,12 +8,13 @@
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
+		line-height: 1.5;
 	}
 
 	input[type="range"] {
 		min-width: 75%;
 	}
-	
+
 	input[type="number"] {
 		border: none;
 		border-bottom: 1px solid grey;
@@ -21,73 +22,78 @@
 		margin: 10px 10px 0 0;
 		padding: 2px 4px;
 	}
-	
+
 	ol {
 		margin-left: 18px;
 	}
-	
+
 	.box {
-	   position: relative;
+		position: relative;
 	}
-	
+
 	.box > * {
-	   position: absolute;
-	   border: 1px solid black;
-	   width: 100px;
-	   height: 100px;
-	   margin: 10px 6px;
+		position: absolute;
+		border: 1px solid black;
+		width: 100px;
+		height: 100px;
+		margin: 10px 6px;
 	}
-	
-	.increase, .decrease {
+
+	.increase,
+	.decrease {
 		border: none;
 		padding: 8px 16px;
 		margin: 6px;
 		cursor: pointer;
 		border: 1px solid black;
 	}
-	
-	.color:nth-child(1) button.increase, .color:nth-child(1) button.decrease {
+
+	.color:nth-child(1) button.increase,
+	.color:nth-child(1) button.decrease {
 		background-color: red;
 		color: white;
 	}
-	
-	.color:nth-child(2) button.increase, .color:nth-child(2) button.decrease {
+
+	.color:nth-child(2) button.increase,
+	.color:nth-child(2) button.decrease {
 		background-color: green;
 		color: white;
 	}
-	
-	.color:nth-child(3) button.increase, .color:nth-child(3) button.decrease {
+
+	.color:nth-child(3) button.increase,
+	.color:nth-child(3) button.decrease {
 		background-color: blue;
 		color: white;
 	}
-	
+
 	.color {
 		padding: 4px 6px;
 		margin: 10px 6px;
 	}
-	
+
 	.container {
-		padding: 4px 6px;
-		margin: 10px 6px;
+		padding: 8px 32px;
+		margin: 8px 32px;
 		border: 1px solid black;
 		position: relative;
 	}
-	
+
 	.container .color {
 		height: 90px;
 	}
-	
+
 	#color-output {
 		height: 400px;
 		max-width: 100%;
 		border: 1px solid black;
 		margin: 4px 6px;
 	}
-	
+
 	#target {
-		margin: 6px 8px;
+		margin: 16px auto;
+		text-align: center;
 	}
-	
+
 	#set-color {
 		border: none;
 		background-color: black;
@@ -102,46 +108,49 @@
 <body>
 	
 	<div class="container">
-		<h3>! Catatan !</h3>
-		<p>Masukkan nilai warna dengan 3 cara :</p>
-		<ol>
-			<li>Menginput langsung pada kolom inputan</li>
-			<li>Menggeser slider sesuai kebutuhan</li>
-			<li>Menekan tombol pada sisi slider</li>
-		</ol>
+	    <h3>! NOTE !</h3>
+	    <p>Enter color values in 3 ways:</p>
+	    <ol>
+			<li>Input directly in the input field</li>
+			<li>Move the slider as needed</li>
+			<li>Pressing the button on the side of the slider</li>
+	    </ol>
 	</div>
-	
+
 	<div class="container">
-		<div class="color">
-			<p>Red</p> 
+	    <div class="color">
+			<p>Red</p>
 			<input type="number" id="red" name="red" value="0">
 			<input type="range" min="0" max="255" value="0">
 			<button class="decrease">-</button>
 			<button class="increase">+</button>
-		</div>
-	
-		<div class="color">
-			<p>Green</p> 
+	    </div>
+
+	    <div class="color">
+			<p>Green</p>
 			<input type="number" id="green" name="green" value="0">
 			<input type="range" min="0" max="255" value="0">
 			<button class="decrease">-</button>
 			<button class="increase">+</button>
-		</div>
-		
-		<div class="color">
-			<p>Blue</p> 
+	    </div>
+
+	    <div class="color">
+			<p>Blue</p>
 			<input type="number" id="blue" name="blue" value="0">
 			<input type="range" min="0" max="255" value="0">
 			<button class="decrease">-</button>
 			<button class="increase">+</button>
-		</div>
+	    </div>
 	</div>
-	<p id="target"></p>
-	<div id="color-output"></div>
+
+	<div class="container">
+	    <p id="target"></p>
+	    <div id="color-output"></div>
+	</div>
 	
 	<script>
 	const colorName = document.querySelectorAll('.color');
-	
+
 	colorName.forEach(function(element, index) {
 		const decrease     = document.querySelectorAll('.decrease')[index];
 		const increase     = document.querySelectorAll('.increase')[index];
@@ -161,52 +170,52 @@
 				inputElement.value = inputRange.max;
 			}
 		}
-		
+
 		const buttonDecrease = function() {
 			if(inputElement.value >= 1) {
 				inputElement.value--;
 				inputRange.value--;
 			}
 		}
-		
+
 		const buttonIncrease = function() {
 			if(inputElement.value <= 254) {
 				inputElement.value++;
 				inputRange.value++;
 			}
 		}
-		
+
 		const controlRange = function() {
 			inputElement.value = event.currentTarget.value;
 		}
-		
+
 		inputElement.addEventListener('keyup', checkInput);
 		decrease.addEventListener('click', buttonDecrease);
 		increase.addEventListener('click', buttonIncrease);
 		inputRange.addEventListener('change', controlRange);
 	});
-	
+
 	document.body.addEventListener('click', function() {
 		const colorOutput = document.getElementById('color-output');
-		
+
 		const red    = document.getElementById('red').value;
 		const green  = document.getElementById('green').value;
 		const blue   = document.getElementById('blue').value;
-		
+
 		const target = document.getElementById('target');
 		if(red >= 0 && green >= 0 && blue >= 0) {
 			target.innerHTML = `rgb(${red}, ${green}, ${blue})`;
 			colorOutput.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
 		}
 	});
-	
+
 	document.body.addEventListener('change', function() {
 		const colorOutput = document.getElementById('color-output');
-		
+
 		const red    = document.getElementById('red').value;
 		const green  = document.getElementById('green').value;
 		const blue   = document.getElementById('blue').value;
-		
+
 		const target = document.getElementById('target');
 		if(red >= 0 && green >= 0 && blue >= 0) {
 			target.innerHTML = `rgb(${red}, ${green}, ${blue})`;
